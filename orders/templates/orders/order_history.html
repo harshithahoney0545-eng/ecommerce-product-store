@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>My Orders</h2>
+
+{% for order in orders %}
+    <p>Order ID: {{ order.id }} - ₹{{ order.total_amount }}</p>
+{% endfor %}
+
+{% endblock %}

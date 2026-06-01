@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row">
+
+        <!-- Product Image -->
+        <div class="col-md-6">
+
+            {% if product.image %}
+                <img src="{{ product.image.url }}"
+                     class="img-fluid rounded shadow">
+            {% else %}
+                <img src="https://via.placeholder.com/500x400"
+                     class="img-fluid rounded shadow">
+            {% endif %}
+
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6">
+
+            <h2>{{ product.name }}</h2>
+
+            <h3 class="text-success">
+                ₹{{ product.price }}
+            </h3>
+
+            <p>
+                ⭐ Rating:
+                <strong>{{ product.rating }}</strong>
+            </p>
+
+            <p>
+                👁️ Views:
+                <strong>{{ product.views }}</strong>
+            </p>
+
+            {% if product.stock > 0 %}
+                <p>
+                    <span class="badge bg-success">
+                        In Stock ({{ product.stock }})
+                    </span>
+                </p>
+            {% else %}
+                <p>
+                    <span class="badge bg-danger">
+                        Out Of Stock
+                    </span>
+                </p>
+            {% endif %}
+
+            <p>
+                <span class="badge bg-primary">
+                    🚚 Free Delivery
+                </span>
+            </p>
+
+            <button class="btn btn-warning">
+                Add To Cart
+            </button>
+
+            <form action="{% url 'add_to_wishlist' product.id %}"
+                  method="POST"
+                  class="mt-2">
+                {% csrf_token %}
+                <button class="btn btn-danger">
+                    ❤️ Wishlist
+                </button>
+            </form>
+
+            <a href="{% url 'home' %}"
+               class="btn btn-secondary mt-3">
+               ← Back To Home
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="p-4 mb-4 rounded text-white"
+     style="background:linear-gradient(90deg,#ff9900,#ff5e00);">
+    <h2>🔥 Big Deals on Electronics & Fashion</h2>
+    <p>Up to 50% OFF • Limited Time Offer</p>
+</div>
+
+<h3 class="text-center mb-4">🛍 Products</h3>
+
+<div class="product-grid">
+
+    {% for product in products %}
+    <div class="card">
+
+        {% if product.image %}
+            <img src="{{ product.image.url }}" class="card-img-top">
+        {% else %}
+            <img src="https://via.placeholder.com/300x220"
+                 class="card-img-top">
+        {% endif %}
+
+        <div class="card-body">
+
+            <h5>{{ product.name }}</h5>
+
+            <p class="text-success fw-bold">
+                ₹{{ product.price }}
+            </p>
+
+            <p style="color:#f39c12;">
+                ⭐⭐⭐⭐☆
+            </p>
+
+            <button class="btn btn-warning w-100 mb-2">
+                Add to Cart
+            </button>
+
+            <form action="{% url 'add_to_wishlist' product.id %}"
+                  method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger w-100">
+                    ❤️ Wishlist
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+    {% empty %}
+        <p>No products available.</p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

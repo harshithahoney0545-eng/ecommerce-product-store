@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Hero Banner -->
+<div class="p-5 mb-5 rounded text-center text-white"
+     style="background:linear-gradient(90deg,#0f2027,#203a43,#2c5364);">
+
+    <h1 class="display-5 fw-bold">
+        🔥 Mega Sale on
+    </h1>
+
+    <p class="fs-4">
+        Up To 80% OFF On Electronics
+    </p>
+
+    <a href="{% url 'product_list' %}"
+       class="btn btn-warning btn-lg">
+       Shop Now
+    </a>
+
+</div>
+
+<!-- Product Count -->
+<div class="alert alert-info text-center">
+    📦 Total Products: {{ product_count }}
+</div>
+
+<!-- Deal Of The Day -->
+{% if featured_product %}
+<div class="card mb-4 shadow">
+    <div class="card-body text-center">
+
+        <h3>🔥 Deal Of The Day</h3>
+
+        {% if featured_product.image %}
+            <img src="{{ featured_product.image.url }}"
+                 style="height:220px;">
+        {% endif %}
+
+        <h4 class="mt-3">
+            {{ featured_product.name }}
+        </h4>
+
+        <h5 class="text-success">
+            ₹{{ featured_product.price }}
+        </h5>
+
+        <a href="{% url 'product_detail' featured_product.id %}"
+           class="btn btn-warning">
+            View Product
+        </a>
+
+    </div>
+</div>
+{% endif %}
+
+<h1 class="text-center mb-4">🛒 Home</h1>
+
+<!-- Surprise Me Button -->
+<div class="text-center mb-4">
+    <a href="{% url 'surprise_me' %}"
+       class="btn btn-dark">
+       🎲 Surprise Me
+    </a>
+</div>
+
+<div class="container">
+    <div class="row g-4">
+
+        {% for product in products %}
+
+        <div class="col-lg-3 col-md-4 col-sm-6">
+
+            <div class="card h-100">
+
+                {% if product.image %}
+                    <a href="{% url 'product_detail' product.id %}">
+
+                        <div class="position-relative">
+
+                            <!-- New Badge -->
+                            <span class="badge bg-danger position-absolute m-2">
+                                🆕 New
+                            </span>
+
+                            <img src="{{ product.image.url }}"
+                                 class="card-img-top">
+
+                        </div>
+
+                    </a>
+                {% else %}
+                    <img src="https://via.placeholder.com/300x220"
+                         class="card-img-top">
+                {% endif %}
+
+                <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">
+                        {{ product.name }}
+                    </h5>
+
+                    <p class="text-success fw-bold">
+                        ₹{{ product.price }}
+                    </p>
+
+                    <!-- Free Delivery -->
+                    <p>
+                        <span class="badge bg-success">
+                            🚚 Free Delivery
+                        </span>
+                    </p>
+
+                    <p style="color:#a812f3;">
+                        ⭐⭐⭐⭐☆
+                    </p>
+
+                    <button class="btn btn-primary w-100 mt-auto">
+                        Add to Cart
+                    </button>
+
+                    <form action="{% url 'add_to_wishlist' product.id %}"
+                          method="POST">
+                        {% csrf_token %}
+                        <button class="btn btn-danger w-100 mt-2">
+                            ❤️ Wishlist
+                        </button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="text-center">
+            <p>No products available 😢</p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}
