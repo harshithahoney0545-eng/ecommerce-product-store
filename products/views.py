@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 from .models import Product
 import json
 import random
@@ -18,6 +19,10 @@ def home(request):
     }
 
     return render(request, 'products/home.html', context)
+
+@login_required
+def profile(request):
+    return render(request, 'profile.html')
 
 # 📦 PRODUCT LIST PAGE
 def product_list(request):

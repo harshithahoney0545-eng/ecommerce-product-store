@@ -1,3 +1,3 @@
 from django.contrib import admin
-
-# Register your models here.
+def get_queryset(self, request):
+    return super().get_queryset(request)
