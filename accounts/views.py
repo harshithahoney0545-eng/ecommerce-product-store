@@ -7,5 +7,5 @@ def signup_view(request):
     return render(request, 'accounts/signup.html')
 
 def cart_view(request):
-    return render(request, 'cart.html')
+     return render(request, 'cart/cart.html')
     

@@ -36,7 +36,18 @@ def add_to_wishlist(request, id):
 
 # 🔍 SEARCH FEATURE
 def search(request):
-    query = request.GET.get('q')
+    query = request.GET.get('q', '')
+
+    products = Product.objects.filter(name__icontains=query)
+
+    return render(
+        request,
+        'search_results.html',
+        {
+            'products': products,
+            'query': query
+        }
+    )
 
 def category_products(request, category_name):
     return render(
